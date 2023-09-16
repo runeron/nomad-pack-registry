@@ -3,6 +3,9 @@ job [[ template "job_name" . ]] {
   [[- with .my.region ]]
   region = [[ . | quote ]]
   [[- end ]]
+  [[- with .my.namespace ]]
+  namespace   = [[ . | quote ]]
+  [[- end ]]
   type        = "service"
   datacenters = [[ .my.datacenters  | toStringList ]]
   
@@ -43,11 +46,12 @@ job [[ template "job_name" . ]] {
       [[- end ]]
     }
 
-    [[- if .my.register_consul_service ]]
+    [[- if .my.register_service ]]
     
     service {
-      name = "[[ .my.consul_service_name ]]"
-      tags = [[ .my.consul_service_tags | toStringList ]]
+      provider = [[ .my.service_provider | quote ]]
+      name = [[ .my.service_name | quote]]
+      tags = [[ .my.service_tags | toStringList ]]
       port = "http"
       
       check {

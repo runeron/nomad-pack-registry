@@ -14,6 +14,12 @@ variable "region" {
   default     = null
 }
 
+variable "namespace" {
+  description = "The nomad namespace where jobs will be deployed"
+  type        = string
+  default     = null
+}
+
 variable "datacenters" {
   description = "A list of datacenters in the region which are eligible for task placement"
   type        = list(string)
@@ -31,23 +37,29 @@ variable "constraints" {
 }
 
 ////////////////////////
-// Consul Variables
+// Consul Service
 ////////////////////////
 
-variable "register_consul_service" {
-  description = "If you want to register a consul service for the job"
+variable "register_service" {
+  description = "If you want to register a service for the job"
   type        = bool
   default     = true
 }
 
-variable "consul_service_name" {
-  description = "The consul service name for the nightscout application"
+variable "service_provider" {
+  description = "The service provider (nomad or consul)"
+  type        = string
+  default     = "nomad"
+}
+
+variable "service_name" {
+  description = "The service name for the nightscout application"
   type        = string
   default     = "nightscout"
 }
 
-variable "consul_service_tags" {
-  description = "The consul service name for the nightscout application"
+variable "service_tags" {
+  description = "The service tags for the nightscout application"
   type        = list(string)
   
   default = [
@@ -155,6 +167,7 @@ variable "task_nightscout_image" {
 }
 
 variable "task_nightscout_env" {
+  description = "See https://nightscout.github.io/nightscout/setup_variables/ for nightscout variables"
   type = map(string)
   
   default = {

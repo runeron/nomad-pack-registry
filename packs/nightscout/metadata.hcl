@@ -9,5 +9,5 @@ pack {
   name        = "nightscout"
   description = "Deploy Nightscout website (w/optional mongo instance)."
   url         = "https://github.com/hashicorp/example-nomad-pack-registry/nightscout"
-  version     = "0.0.1"
+  version     = "0.1.0"
 }
